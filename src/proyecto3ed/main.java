@@ -31,7 +31,77 @@ public class main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jdFriends = new javax.swing.JDialog();
+        tfPerson1 = new javax.swing.JTextField();
+        tfPerson2 = new javax.swing.JTextField();
+        jlName1 = new javax.swing.JLabel();
+        jlName2 = new javax.swing.JLabel();
+        bVerify = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        taResult = new javax.swing.JTextArea();
         bLoad = new javax.swing.JButton();
+        bDraw = new javax.swing.JButton();
+        bFriends = new javax.swing.JButton();
+        lTitulo = new javax.swing.JLabel();
+        bExit = new javax.swing.JButton();
+
+        jlName1.setText("Nombre Persona 1:");
+
+        jlName2.setText("Nombre Persona 2:");
+
+        bVerify.setText("Verificar Amistad");
+        bVerify.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bVerifyMouseClicked(evt);
+            }
+        });
+
+        taResult.setEditable(false);
+        taResult.setColumns(20);
+        taResult.setRows(5);
+        jScrollPane1.setViewportView(taResult);
+
+        javax.swing.GroupLayout jdFriendsLayout = new javax.swing.GroupLayout(jdFriends.getContentPane());
+        jdFriends.getContentPane().setLayout(jdFriendsLayout);
+        jdFriendsLayout.setHorizontalGroup(
+            jdFriendsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jdFriendsLayout.createSequentialGroup()
+                .addGroup(jdFriendsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jdFriendsLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jdFriendsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlName1)
+                            .addComponent(jlName2))
+                        .addGap(36, 36, 36)
+                        .addGroup(jdFriendsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfPerson2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfPerson1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jdFriendsLayout.createSequentialGroup()
+                        .addGap(183, 183, 183)
+                        .addComponent(bVerify)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdFriendsLayout.createSequentialGroup()
+                .addGap(0, 26, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
+        );
+        jdFriendsLayout.setVerticalGroup(
+            jdFriendsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jdFriendsLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jdFriendsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfPerson1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlName1))
+                .addGap(18, 18, 18)
+                .addGroup(jdFriendsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfPerson2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlName2))
+                .addGap(18, 18, 18)
+                .addComponent(bVerify)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -42,21 +112,64 @@ public class main extends javax.swing.JFrame {
             }
         });
 
+        bDraw.setText("Dibujar Grafo");
+        bDraw.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bDrawMouseClicked(evt);
+            }
+        });
+
+        bFriends.setText("Verificar Amistades");
+        bFriends.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bFriendsMouseClicked(evt);
+            }
+        });
+
+        lTitulo.setFont(new java.awt.Font("Old English Text MT", 1, 24)); // NOI18N
+        lTitulo.setForeground(new java.awt.Color(51, 51, 255));
+        lTitulo.setText("Red de amistades");
+
+        bExit.setText("Salir");
+        bExit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bExitMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(119, 119, 119)
-                .addComponent(bLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addGap(84, 84, 84)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lTitulo)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(bDraw, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bFriends, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(bExit, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32)))))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(lTitulo)
+                .addGap(27, 27, 27)
                 .addComponent(bLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(251, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bDraw, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bFriends, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(bExit)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
@@ -113,6 +226,68 @@ public class main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bLoadMouseClicked
 
+    private void bDrawMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bDrawMouseClicked
+        if(grafo.getEachNode()!=null){
+            grafo.display(true).setCloseFramePolicy(Viewer.CloseFramePolicy.CLOSE_VIEWER);
+        }else{
+            JOptionPane.showMessageDialog(this, "No hay un grafo creado, cargue datos a partir de un archivo txt primero!");
+        }
+    }//GEN-LAST:event_bDrawMouseClicked
+
+    private void bFriendsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bFriendsMouseClicked
+        if(grafo.getEachNode()!=null){
+            jdFriends.setModal(true);
+            jdFriends.setLocationRelativeTo(this);
+            jdFriends.pack();
+            tfPerson1.setText("");
+            tfPerson2.setText("");
+            taResult.setText("");
+            jdFriends.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "No hay un grafo creado, cargue datos a partir de un archivo txt primero!");
+        }
+    }//GEN-LAST:event_bFriendsMouseClicked
+
+    private void bVerifyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bVerifyMouseClicked
+        if(tfPerson1.getText().equals("")||tfPerson2.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Ingrese ambos nombres (correctos) para poder verificar su amistad!");
+        }else{
+            taResult.setText("");
+            Edge amistad1=grafo.getEdge(tfPerson1.getText()+tfPerson2.getText());
+            Edge amistad2=grafo.getEdge(tfPerson2.getText()+tfPerson1.getText());
+            if(amistad1==null){
+                taResult.append(tfPerson1.getText()+" no conoce a "+tfPerson2.getText());
+            }else{
+                taResult.append(tfPerson1.getText()+" conoce a "+tfPerson2.getText());
+            }
+            if(amistad2==null){
+                taResult.append("\n"+tfPerson2.getText()+" no conoce a "+tfPerson1.getText()+"\n");
+            }else{
+                taResult.append("\n"+tfPerson2.getText()+" conoce a "+tfPerson1.getText()+"\n");
+            }
+            Node a=grafo.getNode(tfPerson1.getText());
+            Node b=grafo.getNode(tfPerson2.getText());
+            Edge camino=a.getEdgeBetween(b);
+            //camino.addAttribute("ui.value", 1);
+            System.out.println(camino);
+            if(amistad1!=null&&amistad2!=null){
+                
+                taResult.append("Por lo tanto, "+tfPerson1.getText()+" y "+tfPerson2.getText()+" son amigos!");
+                tfPerson1.setText("");
+                tfPerson2.setText("");
+            }else{
+                taResult.append("Por lo tanto, "+tfPerson1.getText()+" y "+tfPerson2.getText()+" no son amigos.");
+                tfPerson1.setText("");
+                tfPerson2.setText("");
+            }
+        }
+    }//GEN-LAST:event_bVerifyMouseClicked
+
+    private void bExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bExitMouseClicked
+        grafo.clear();
+        System.exit(0);
+    }//GEN-LAST:event_bExitMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -149,6 +324,18 @@ public class main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bDraw;
+    private javax.swing.JButton bExit;
+    private javax.swing.JButton bFriends;
     private javax.swing.JButton bLoad;
+    private javax.swing.JButton bVerify;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JDialog jdFriends;
+    private javax.swing.JLabel jlName1;
+    private javax.swing.JLabel jlName2;
+    private javax.swing.JLabel lTitulo;
+    private javax.swing.JTextArea taResult;
+    private javax.swing.JTextField tfPerson1;
+    private javax.swing.JTextField tfPerson2;
     // End of variables declaration//GEN-END:variables
 }
