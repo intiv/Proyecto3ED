@@ -1,31 +1,32 @@
 package proyecto3ed;
 
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.graphstream.algorithm.Dijkstra;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
+import org.graphstream.graph.Path;
 import org.graphstream.graph.implementations.MultiGraph;
-import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.ui.view.Viewer;
 
 public class main extends javax.swing.JFrame {
+
     Graph grafo;
+
     public main() {
         initComponents();
-        grafo=new MultiGraph("Amistades");
+        grafo = new MultiGraph("Amistades");
         grafo.setStrict(false);
         grafo.setAutoCreate(false);
-        
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -176,66 +177,68 @@ public class main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bLoadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bLoadMouseClicked
-        try{
-            String dir=System.getProperty("user.home");
-            JFileChooser chooser=new JFileChooser(dir+"/Desktop");
-            FileFilter filter=new FileNameExtensionFilter(null,"txt");
+        try {
+            String dir = System.getProperty("user.home");
+            JFileChooser chooser = new JFileChooser(dir + "/Desktop");
+            FileFilter filter = new FileNameExtensionFilter(null, "txt");
             chooser.setAcceptAllFileFilterUsed(false);
             chooser.setFileFilter(filter);
             chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            if(chooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION){
-                if(chooser.getSelectedFile().getName().endsWith(".txt")){
-                    File file=chooser.getSelectedFile();
-                    FileReader in=new FileReader(file);
-                    BufferedReader reader=new BufferedReader(in);
+            if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+                if (chooser.getSelectedFile().getName().endsWith(".txt")) {
+                    File file = chooser.getSelectedFile();
+                    FileReader in = new FileReader(file);
+                    BufferedReader reader = new BufferedReader(in);
                     String line;
-                    while((line=reader.readLine())!=null){
-                        if(line.contains(",")){
-                            String[] vertices=line.split(",");
-                            Node nodo1=null;
-                            Node nodo2=null;
-                            if(grafo.getNode(vertices[0])==null){
+                    while ((line = reader.readLine()) != null) {
+                        if (line.contains(",")) {
+                            String[] vertices = line.split(",");
+                            Node nodo1 = null;
+                            Node nodo2 = null;
+                            if (grafo.getNode(vertices[0]) == null) {
                                 grafo.addNode(vertices[0]);
-                                nodo1=grafo.getNode(vertices[0]);
-                                nodo1.setAttribute("ui.label", vertices[0]);
-                            }else{
-                                nodo1=grafo.getNode(vertices[0]);
+                                nodo1 = grafo.getNode(vertices[0]);
+                                nodo1.addAttribute("ui.label", vertices[0]);
+
+                            } else {
+                                nodo1 = grafo.getNode(vertices[0]);
                             }
-                            if(grafo.getNode(vertices[1])==null){
-                                grafo.addNode(vertices[1]);                            
-                                nodo2=grafo.getNode(vertices[1]);
+                            if (grafo.getNode(vertices[1]) == null) {
+                                grafo.addNode(vertices[1]);
+                                nodo2 = grafo.getNode(vertices[1]);
                                 nodo2.setAttribute("ui.label", vertices[1]);
-                            }else{
-                                nodo2=grafo.getNode(vertices[1]);
+                            } else {
+                                nodo2 = grafo.getNode(vertices[1]);
                             }
-                            if(grafo.getEdge(nodo1.getId()+nodo2.getId())==null){
-                                grafo.addEdge(nodo1.getId()+nodo2.getId(), nodo1, nodo2,true);
+                            if (grafo.getEdge(nodo1.getId() + nodo2.getId()) == null) {
+                                grafo.addEdge(nodo1.getId() + nodo2.getId(), nodo1, nodo2, true).addAttribute("weight", 1);
                             }
                         }
                     }
+
                     JOptionPane.showMessageDialog(this, "Se cargaron los datos al grafo con exito!");
                     reader.close();
                     in.close();
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(this, "Archivo invalido, debe cargar un archivo .txt!");
                 }
             }
-        }catch(IOException|NullPointerException e){
+        } catch (IOException | NullPointerException e) {
             grafo.clear();
             JOptionPane.showMessageDialog(this, "Ocurrio un error cargando los datos. Revise si el archivo txt tiene el formato correcto (Persona1,Persona2)");
         }
     }//GEN-LAST:event_bLoadMouseClicked
 
     private void bDrawMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bDrawMouseClicked
-        if(grafo.getEachNode()!=null){
+        if (grafo.getEachNode() != null) {
             grafo.display(true).setCloseFramePolicy(Viewer.CloseFramePolicy.CLOSE_VIEWER);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "No hay un grafo creado, cargue datos a partir de un archivo txt primero!");
         }
     }//GEN-LAST:event_bDrawMouseClicked
 
     private void bFriendsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bFriendsMouseClicked
-        if(grafo.getEachNode()!=null){
+        if (grafo.getEachNode() != null) {
             jdFriends.setModal(true);
             jdFriends.setLocationRelativeTo(this);
             jdFriends.pack();
@@ -243,42 +246,68 @@ public class main extends javax.swing.JFrame {
             tfPerson2.setText("");
             taResult.setText("");
             jdFriends.setVisible(true);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "No hay un grafo creado, cargue datos a partir de un archivo txt primero!");
         }
     }//GEN-LAST:event_bFriendsMouseClicked
 
     private void bVerifyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bVerifyMouseClicked
-        if(tfPerson1.getText().equals("")||tfPerson2.getText().equals("")){
+        if (tfPerson1.getText().equals("") || tfPerson2.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Ingrese ambos nombres (correctos) para poder verificar su amistad!");
-        }else{
+        } else {
             taResult.setText("");
-            Edge amistad1=grafo.getEdge(tfPerson1.getText()+tfPerson2.getText());
-            Edge amistad2=grafo.getEdge(tfPerson2.getText()+tfPerson1.getText());
-            if(amistad1==null){
-                taResult.append(tfPerson1.getText()+" no conoce a "+tfPerson2.getText());
-            }else{
-                taResult.append(tfPerson1.getText()+" conoce a "+tfPerson2.getText());
+            Edge amistad1 = grafo.getEdge(tfPerson1.getText() + tfPerson2.getText());
+            Edge amistad2 = grafo.getEdge(tfPerson2.getText() + tfPerson1.getText());
+            if (amistad1 == null) {
+                taResult.append(tfPerson1.getText() + " no conoce a " + tfPerson2.getText());
+            } else {
+                taResult.append(tfPerson1.getText() + " conoce a " + tfPerson2.getText());
             }
-            if(amistad2==null){
-                taResult.append("\n"+tfPerson2.getText()+" no conoce a "+tfPerson1.getText()+"\n");
-            }else{
-                taResult.append("\n"+tfPerson2.getText()+" conoce a "+tfPerson1.getText()+"\n");
+            if (amistad2 == null) {
+                taResult.append("\n" + tfPerson2.getText() + " no conoce a " + tfPerson1.getText() + "\n");
+            } else {
+                taResult.append("\n" + tfPerson2.getText() + " conoce a " + tfPerson1.getText() + "\n");
             }
-            Node a=grafo.getNode(tfPerson1.getText());
-            Node b=grafo.getNode(tfPerson2.getText());
-            Edge camino=a.getEdgeBetween(b);
-            //camino.addAttribute("ui.value", 1);
-            System.out.println(camino);
-            if(amistad1!=null&&amistad2!=null){
-                
-                taResult.append("Por lo tanto, "+tfPerson1.getText()+" y "+tfPerson2.getText()+" son amigos!");
+            if (amistad1 != null && amistad2 != null) {
+                taResult.append("Por lo tanto, " + tfPerson1.getText() + " y " + tfPerson2.getText() + " son amigos!");
                 tfPerson1.setText("");
                 tfPerson2.setText("");
-            }else{
-                taResult.append("Por lo tanto, "+tfPerson1.getText()+" y "+tfPerson2.getText()+" no son amigos.");
+            } else {
+                taResult.append("Por lo tanto, " + tfPerson1.getText() + " y " + tfPerson2.getText() + " no son amigos.");
+                Node person1 = grafo.getNode(tfPerson1.getText());
+                Node person2 = grafo.getNode(tfPerson2.getText());
                 tfPerson1.setText("");
                 tfPerson2.setText("");
+                Dijkstra dijkstra = new Dijkstra(Dijkstra.Element.EDGE, null, "weight");
+                dijkstra.init(grafo);
+                dijkstra.setSource(person1);
+                dijkstra.compute();
+                Path camino = dijkstra.getPath(person2);
+                Node principal;
+                if (!camino.getEdgePath().isEmpty()) {
+                    principal = person1;
+                } else {
+                    principal = null;
+                }
+
+                if (!camino.getEdgePath().isEmpty() && principal != null) {
+                    if (camino.getEdgePath().size() > 1) {
+                        String separator="";
+                        taResult.append("\n" + principal.getId() + " puede conocer a " + (principal == person1 ? person2.getId() : person1.getId()) + " a traves de las siguiente conecciones de amistades:\n");
+                        taResult.append(principal.getId()+"->");
+                        for (Edge edge : camino.getEdgePath()) {
+                            if(edge.getTargetNode()==(principal==person1?person2:person1)){
+                                separator="";
+                            }else{
+                                separator="->";
+                            }
+                            taResult.append(edge.getTargetNode().getId()+separator);
+                            
+                        }
+                    }
+                } else {
+                    taResult.append("\n-"+person1.getId() + " y " + person2.getId() + " no se pueden conocer a traves de sus amistades");
+                }
             }
         }
     }//GEN-LAST:event_bVerifyMouseClicked
@@ -319,8 +348,14 @@ public class main extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new main().setVisible(true);
+
             }
         });
+    }
+
+    public static ArrayList<Edge> dijkstra(Node origen, ArrayList<Edge> caminos) {
+
+        return null;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
