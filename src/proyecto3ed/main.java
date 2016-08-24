@@ -1,5 +1,6 @@
 package proyecto3ed;
 
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -8,11 +9,21 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.graphstream.graph.Edge;
+import org.graphstream.graph.Graph;
+import org.graphstream.graph.Node;
+import org.graphstream.graph.implementations.MultiGraph;
+import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.ui.view.Viewer;
 
 public class main extends javax.swing.JFrame {
-
+    Graph grafo;
     public main() {
         initComponents();
+        grafo=new MultiGraph("Amistades");
+        grafo.setStrict(false);
+        grafo.setAutoCreate(false);
+        
     }
 
 
@@ -36,16 +47,16 @@ public class main extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(bLoad)
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addGap(119, 119, 119)
+                .addComponent(bLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(128, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(bLoad)
-                .addContainerGap(219, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(bLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(251, Short.MAX_VALUE))
         );
 
         pack();
@@ -66,14 +77,39 @@ public class main extends javax.swing.JFrame {
                     BufferedReader reader=new BufferedReader(in);
                     String line;
                     while((line=reader.readLine())!=null){
-                        String[] vertices=line.split(",");
+                        if(line.contains(",")){
+                            String[] vertices=line.split(",");
+                            Node nodo1=null;
+                            Node nodo2=null;
+                            if(grafo.getNode(vertices[0])==null){
+                                grafo.addNode(vertices[0]);
+                                nodo1=grafo.getNode(vertices[0]);
+                                nodo1.setAttribute("ui.label", vertices[0]);
+                            }else{
+                                nodo1=grafo.getNode(vertices[0]);
+                            }
+                            if(grafo.getNode(vertices[1])==null){
+                                grafo.addNode(vertices[1]);                            
+                                nodo2=grafo.getNode(vertices[1]);
+                                nodo2.setAttribute("ui.label", vertices[1]);
+                            }else{
+                                nodo2=grafo.getNode(vertices[1]);
+                            }
+                            if(grafo.getEdge(nodo1.getId()+nodo2.getId())==null){
+                                grafo.addEdge(nodo1.getId()+nodo2.getId(), nodo1, nodo2,true);
+                            }
+                        }
                     }
+                    JOptionPane.showMessageDialog(this, "Se cargaron los datos al grafo con exito!");
+                    reader.close();
+                    in.close();
                 }else{
                     JOptionPane.showMessageDialog(this, "Archivo invalido, debe cargar un archivo .txt!");
                 }
             }
-        }catch(IOException e){
-        
+        }catch(IOException|NullPointerException e){
+            grafo.clear();
+            JOptionPane.showMessageDialog(this, "Ocurrio un error cargando los datos. Revise si el archivo txt tiene el formato correcto (Persona1,Persona2)");
         }
     }//GEN-LAST:event_bLoadMouseClicked
 
