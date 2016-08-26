@@ -16,6 +16,8 @@ import org.graphstream.graph.Node;
 import org.graphstream.graph.Path;
 import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.ui.view.Viewer;
+import static org.graphstream.algorithm.Toolkit.density;
+import static org.graphstream.algorithm.Toolkit.diameter;
 
 public class main extends javax.swing.JFrame {
 
@@ -45,6 +47,7 @@ public class main extends javax.swing.JFrame {
         bFriends = new javax.swing.JButton();
         lTitulo = new javax.swing.JLabel();
         bExit = new javax.swing.JButton();
+        bExtra = new javax.swing.JButton();
 
         jlName1.setText("Nombre Persona 1:");
 
@@ -138,23 +141,33 @@ public class main extends javax.swing.JFrame {
             }
         });
 
+        bExtra.setText("Calcular Diametro");
+        bExtra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bExtraMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(84, 84, 84)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lTitulo)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(bDraw, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bFriends, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(84, 84, 84)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lTitulo)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(bExit, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(32, 32, 32)))))
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(bDraw, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(bLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(bFriends, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(bExtra, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(129, 129, 129)
+                        .addComponent(bExit, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(92, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -168,9 +181,11 @@ public class main extends javax.swing.JFrame {
                 .addComponent(bDraw, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bFriends, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bExtra, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bExit)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -282,6 +297,7 @@ public class main extends javax.swing.JFrame {
                 dijkstra.init(grafo);
                 dijkstra.setSource(person1);
                 dijkstra.compute();
+                
                 Path camino = dijkstra.getPath(person2);
                 Node principal;
                 if (!camino.getEdgePath().isEmpty()) {
@@ -289,7 +305,6 @@ public class main extends javax.swing.JFrame {
                 } else {
                     principal = null;
                 }
-
                 if (!camino.getEdgePath().isEmpty() && principal != null) {
                     if (camino.getEdgePath().size() > 1) {
                         String separator="";
@@ -302,7 +317,6 @@ public class main extends javax.swing.JFrame {
                                 separator="->";
                             }
                             taResult.append(edge.getTargetNode().getId()+separator);
-                            
                         }
                     }
                 } else {
@@ -316,6 +330,15 @@ public class main extends javax.swing.JFrame {
         grafo.clear();
         System.exit(0);
     }//GEN-LAST:event_bExitMouseClicked
+
+    private void bExtraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bExtraMouseClicked
+        if(grafo.getEachNode()!=null){
+            double dens=diameter(grafo);
+            System.out.println(dens);
+        }else{
+            JOptionPane.showMessageDialog(this, "No hay un grafo creado, cargue datos a partir de un archivo txt primero!");
+        }
+    }//GEN-LAST:event_bExtraMouseClicked
 
     /**
      * @param args the command line arguments
@@ -361,6 +384,7 @@ public class main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bDraw;
     private javax.swing.JButton bExit;
+    private javax.swing.JButton bExtra;
     private javax.swing.JButton bFriends;
     private javax.swing.JButton bLoad;
     private javax.swing.JButton bVerify;
