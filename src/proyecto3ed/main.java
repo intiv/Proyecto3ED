@@ -273,6 +273,7 @@ public class main extends javax.swing.JFrame {
             taResult.setText("");
             Edge amistad1 = grafo.getEdge(tfPerson1.getText() + tfPerson2.getText());
             Edge amistad2 = grafo.getEdge(tfPerson2.getText() + tfPerson1.getText());
+            
             if (amistad1 == null) {
                 taResult.append(tfPerson1.getText() + " no conoce a " + tfPerson2.getText());
             } else {
@@ -308,7 +309,7 @@ public class main extends javax.swing.JFrame {
                 if (!camino.getEdgePath().isEmpty() && principal != null) {
                     if (camino.getEdgePath().size() > 1) {
                         String separator="";
-                        taResult.append("\n" + principal.getId() + " puede conocer a " + (principal == person1 ? person2.getId() : person1.getId()) + " a traves de las siguiente conecciones de amistades:\n");
+                        taResult.append("\n" + principal.getId() + " puede conocer a " + (principal == person1 ? person2.getId() : person1.getId()) + " a traves de las siguientes conecciones de amistades:\n");
                         taResult.append(principal.getId()+"->");
                         for (Edge edge : camino.getEdgePath()) {
                             if(edge.getTargetNode()==(principal==person1?person2:person1)){
@@ -334,7 +335,7 @@ public class main extends javax.swing.JFrame {
     private void bExtraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bExtraMouseClicked
         if(grafo.getEachNode()!=null){
             double dens=diameter(grafo);
-            System.out.println(dens);
+            JOptionPane.showMessageDialog(this, "El diametro del grafo es: "+dens);
         }else{
             JOptionPane.showMessageDialog(this, "No hay un grafo creado, cargue datos a partir de un archivo txt primero!");
         }
@@ -376,10 +377,6 @@ public class main extends javax.swing.JFrame {
         });
     }
 
-    public static ArrayList<Edge> dijkstra(Node origen, ArrayList<Edge> caminos) {
-
-        return null;
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bDraw;
