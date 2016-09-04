@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
@@ -16,7 +15,6 @@ import org.graphstream.graph.Node;
 import org.graphstream.graph.Path;
 import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.ui.view.Viewer;
-import static org.graphstream.algorithm.Toolkit.density;
 import static org.graphstream.algorithm.Toolkit.diameter;
 
 public class main extends javax.swing.JFrame {
